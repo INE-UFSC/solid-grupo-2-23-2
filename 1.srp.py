@@ -1,18 +1,15 @@
-"""
-Single Responsibility Principle
-
-Uma classe deve ter somente uma responsabilidade
-ou
-Uma classe deve ter somente um motivo para mudar
-"""
-
-class Animal:
+class AnimalDados:
     def __init__(self, name: str):
-        self.name = name
+        self.__name = name
     
     def get_name(self) -> str:
-        pass
+        return self.__name
 
-    # salva no DB
-    def save(self, animal: Animal):
+class SalvamentoDados:
+    def __init__(self, animal: AnimalDados):
+        if isinstace(animal, AnimalDados):
+            self.animal = animal
+
+    def save(self) -> None:
+        # salva 
         pass

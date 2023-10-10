@@ -1,51 +1,63 @@
-"""
-Open-Closed Principle
+from abc import ABC
 
-Classes devem estar fechadas para modificação, mas abertas para extensão
-"""
-class Animal:
-    def __init__(self, name: str):
-        self.name = name
-    
-    def get_name(self) -> str:
+
+class Animal(ABC):
+    @abstractmethod
+    def make_sound(self):
         pass
 
+class Lion(Animal):
     def make_sound(self):
-        if self.name == 'lion':
-            print('roar')
-        elif self.name == 'mouse':
-            print('squeak')
-        else:
-            print('...')
+        print("ROAR")
+
+class Mouse(Animal):
+    def make_sound(self):
+        print("I want cheese")
+
 
 animals = [
-    Animal('lion'),
-    Animal('mouse')
+    Lion(),
+    Mouse()
 ]
+
 
 def animal_sound(animals: list):
     for animal in animals:
         animal.make_sound()
 
+
 animal_sound(animals)
 
 
-"""
-Outro exemplo:
+class DescontoCliente:
+    def __init__(self, price):
+        self.__price = price
 
-Imagine que você tem uma loja que dá desconto de 20% aos seus clientes favoritos
-usando essa classe abaixo. Quando você decide dar 40% de desconto a clientes VIP,
-você decide mudar a classe da seguinte forma:
-"""
+    @property
+    def price(self):
+        return self.__price
+    
+    @price.setter
+    def price(self, price):
+        self.__price = price
 
-class Discount:
-    def __init__(self, customer, price):
-        self.customer = customer
-        self.price = price
-
+    @abstractmethod
     def give_discount(self):
-            if self.customer == 'fav':
-                return self.price * 0.2
-            if self.customer == 'vip':
-                return self.price * 0.4
+        pass
+
+
+class  DescontoFavorito:
+    def __init__(self, price):
+        super().__init__(price)
+    
+    def give_discount(self):
+        return self.prcie * 0.2
+
+
+class  DescontoVip:
+    def __init__(self, price):
+        super().__init__(price)
+    
+    def give_discount(self):
+        return self.prcie * 0.4
 

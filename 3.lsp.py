@@ -3,35 +3,43 @@ Liskov Substitution Principle
 
 Uma subclasse deve ser substituível pela sua superclasse 
 """
-class Animal:
+class AnimalSemPernas:
     def __init__(self, name: str):
-        self.name = name
+        self.__name = name
     
     def get_name(self) -> str:
-        return self.name
+        return self.__name
 
-    def leg_count(self) -> int:
-        return 0
 
-class Lion(Animal):
-    def __init__(self):
-        super().__init__('lion')
+class AnimalComPernas:
+    def __init__(self, name: str):
+        self.__name = name
+    
+    def get_name(self) -> str:
+        return self.__name
+
+    @abstractmethod
+    def leg_count(self):
+        pass
+
+
+class Lion(AnimalComPernas):
+    def __init__(self, name: str):
+        super().__init__(name)
 
     def leg_count(self):
         return 4
 
-class Snake(Animal):
-    def __init__(self):
-        super().__init__('snake')
 
-    def leg_count(self):
-        print('I have no legs, dummy')
-
+class Snake(AnimalSemPernas):
+    def __init__(self, name: str):
+        super().__init__(name)
 
 def animal_leg_count(animals: list):
     count = 0
     for animal in animals:
-        count += animal.leg_count()
+        if isinstance(animal, AnimalComPernas):
+            count += animal.leg_count()
     return count
 
 
